@@ -1,0 +1,173 @@
+/* ================================================================
+   custom.css — Teradar documentation style overrides
+   Applied on top of sphinx_rtd_theme 3.x
+   Author: Luis Viveros — May 2026
+   ================================================================ */
+
+/* ── Top-level sidebar background ─────────────────────────── */
+.wy-nav-side,
+.wy-side-scroll {
+    background: #1a1c1e;
+}
+
+.wy-side-nav-search {
+    background: #161819;
+    border-bottom: 1px solid #2c3e50;
+}
+
+.wy-side-nav-search a,
+.wy-side-nav-search .wy-side-nav-search-icon {
+    color: #ecf0f1;
+}
+
+.wy-side-nav-search input[type="text"] {
+    background: #1e2a35;
+    border: 1px solid #2c3e50;
+    color: #b5bac4;
+    border-radius: 4px;
+}
+
+/* ── Navigation link colours ───────────────────────────────── */
+.wy-menu-vertical li.current > a,
+.wy-menu-vertical li.current > a:hover {
+    background: #162030;
+    color: #6eb0e8;
+    border-left: 4px solid #2980b9;
+}
+
+.wy-menu-vertical a {
+    color: #b5bac4;
+}
+
+.wy-menu-vertical a:hover {
+    background: #2c3e50;
+    color: #d6e4f3;
+}
+
+/* ── Content area ──────────────────────────────────────────── */
+.wy-nav-content-wrap {
+    background: #fdfdfd;
+}
+
+.wy-nav-content {
+    max-width: 900px;
+}
+
+/* ── Code blocks ───────────────────────────────────────────── */
+div.highlight pre,
+.highlight {
+    background: #1e272e;
+    border: 1px solid #2c3e50;
+    border-radius: 6px;
+}
+
+div.highlight pre {
+    color: #cdd9e5;
+    font-family: 'Source Code Pro', 'Menlo', monospace;
+    font-size: 13.5px;
+    line-height: 1.65;
+}
+
+/* Caption bar above code blocks */
+div.code-block-caption {
+    background: #2c3e50;
+    color: #85929e;
+    border-radius: 6px 6px 0 0;
+    padding: 5px 14px;
+    font-size: 12px;
+    font-family: 'Source Code Pro', monospace;
+    border: 1px solid #2c3e50;
+    border-bottom: none;
+}
+
+/* ── Admonition boxes ──────────────────────────────────────── */
+.admonition,
+div.admonition {
+    border-radius: 6px;
+    border-left-width: 4px;
+}
+
+.admonition.note,
+div.note {
+    background: #e8f4fd;
+    border-color: #2980b9;
+}
+
+.admonition.warning,
+div.warning {
+    background: #fef9e7;
+    border-color: #f39c12;
+}
+
+.admonition.tip,
+div.tip {
+    background: #eafaf1;
+    border-color: #27ae60;
+}
+
+.admonition.important,
+div.important {
+    background: #fdf2f8;
+    border-color: #8e44ad;
+}
+
+/* Admonition title */
+.admonition-title {
+    font-family: 'Lato', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+}
+
+/* ── Tables ────────────────────────────────────────────────── */
+table.docutils thead tr th {
+    background: #2c3e50;
+    color: #ecf0f1;
+    font-family: 'Lato', sans-serif;
+    font-weight: 600;
+}
+
+table.docutils tbody tr:nth-child(even) td {
+    background: #f5f8fa;
+}
+
+table.docutils td,
+table.docutils th {
+    border: 1px solid #d0d8e0;
+    padding: 8px 14px;
+}
+
+/* ── Heading styles ────────────────────────────────────────── */
+h1, h2, h3, h4 {
+    font-family: 'Lato', sans-serif;
+    color: #2c3e50;
+}
+
+h1 { border-bottom: 2px solid #e0e6ec; padding-bottom: 8px; }
+h2 { border-bottom: 1px solid #e0e6ec; padding-bottom: 4px; }
+
+/* ── Inline code ───────────────────────────────────────────── */
+code.literal,
+tt.literal {
+    background: #e8edf2;
+    color: #c0392b;
+    border: 1px solid #d8dfe6;
+    border-radius: 3px;
+    padding: 1px 4px;
+    font-size: 13.5px;
+}
+
+/* ── Version badge in sidebar ──────────────────────────────── */
+.wy-side-nav-search .version {
+    color: #6e96d2;
+    font-family: 'Source Code Pro', monospace;
+    font-size: 11px;
+}
+
+/* ── Footer ────────────────────────────────────────────────── */
+footer {
+    border-top: 2px solid #e0e6ec;
+    color: #95a5a6;
+    font-size: 13px;
+}
