@@ -3,33 +3,32 @@
 Repository & Project Setup
 ===========================
 
-Start by initialising the GitHub repository and wiring in the CMake build
-**before writing a single line of radar code**. This order matters: CI should
-be green on an empty project so that any future failure is always attributable
-to new code.
+The repository already exists on GitHub. Start by cloning it locally and
+wiring in the CMake build **before writing a single line of radar code**.
+This order matters: CI should be green on an empty project so that any
+future failure is always attributable to new code.
 
-Step 1 — Create the GitHub Repository
----------------------------------------
-
-1. Go to https://github.com/new
-2. Repository name: ``fmcw-thz-radar-sim``
-3. Description: ``FMCW & TeraHertz Radar Simulation — C++17 + Yocto``
-4. Visibility: Public (required for free GitHub Actions minutes)
-5. Initialise with: ``README.md``, ``.gitignore`` (C++ template), MIT licence
-6. Click **Create repository**
-
-Step 2 — Clone and Scaffold
+Step 1 — Clone and Scaffold
 -----------------------------
 
 .. code-block:: bash
 
-   git clone https://github.com/your-org/fmcw-thz-radar-sim.git
+   # SSH (recommended)
+   git clone git@github.com:your-org/fmcw-thz-radar-sim.git
    cd fmcw-thz-radar-sim
 
-   # Create directory skeleton
+   # Create the full directory skeleton in one shot
    mkdir -p include src tests scripts .github/workflows
 
-Step 3 — Add a Stub CMakeLists and Confirm a Clean Build
+   # Create placeholder files so git tracks the directories
+   touch include/fmcw_generator.hpp include/csv_export.hpp
+   touch src/fmcw_generator.cpp src/main.cpp
+   touch tests/CMakeLists.txt
+   touch tests/test_if_signal.cpp tests/test_micro_doppler.cpp
+   touch tests/test_range_doppler.cpp tests/test_cfar.cpp
+   touch scripts/plot_if.py scripts/plot_range_doppler.py
+
+Step 2 — Add a Stub CMakeLists and Confirm a Clean Build
 ----------------------------------------------------------
 
 Create the files described in :ref:`phase1_cmake_build`, then verify:
@@ -40,20 +39,21 @@ Create the files described in :ref:`phase1_cmake_build`, then verify:
    cmake --build build --parallel
    # Expected: radar_sim binary produced, 0 errors
 
-Step 4 — Add the GitHub Actions Workflow
+Step 3 — Add the GitHub Actions Workflow
 -----------------------------------------
 
 Create ``.github/workflows/ci.yml`` as described in
-:ref:`phase1_github_workflow` and push:
+:ref:`phase1_github_workflow`, then commit and push to confirm the pipeline
+is green before any physics code is added:
 
 .. code-block:: bash
 
    git add .
    git commit -m "chore: scaffold project, stub CMake, empty CI"
    git push origin main
-   # → Visit Actions tab — pipeline should be green before physics code is added
+   # → Visit the Actions tab — both jobs must be green before proceeding
 
-Step 5 — Implement, Test, Commit
+Step 4 — Implement, Test, Commit
 ----------------------------------
 
 Follow the remaining Phase 1 pages in order, keeping the test suite green
