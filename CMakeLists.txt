@@ -1,0 +1,39 @@
+cmake_minimum_required(VERSION 3.24)
+project(fmcw_thz_radar_sim VERSION 0.1.0 LANGUAGES CXX)
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+
+# ── Compiler warnings (treated as errors) ────────────────────
+if(MSVC)
+  add_compile_options(/W4 /WX)
+else()
+  add_compile_options(-Wall -Wextra -Wpedantic -Werror)
+endif()
+
+# ── fmcw_core static library ─────────────────────────────────
+add_library(fmcw_core STATIC
+    src/fmcw_generator.cpp
+)
+target_include_directories(fmcw_core PUBLIC include)
+
+# ── Main executable ──────────────────────────────────────────
+add_executable(radar_sim src/main.cpp)
+target_link_libraries(radar_sim PRIVATE fmcw_core)
+
+# ── Catch2 test suite (FetchContent — no manual install) ─────
+include(FetchContent)
+FetchContent_Declare(
+    Catch2
+    GIT_REPOSITORY https://github.com/catchorg/Catch2.git
+    GIT_TAG        v3.6.0
+)
+FetchContent_MakeAvailable(Catch2)
+
+enable_testing()
+add_subdirectory(tests)
+
+# ── Install rules ────────────────────────────────────────────
+install(TARGETS radar_sim DESTINATION bin)
+install(DIRECTORY include/ DESTINATION include)

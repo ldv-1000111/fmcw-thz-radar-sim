@@ -1,0 +1,5 @@
+if(EXISTS "/home/lvs/data/1_devel/10_claudeCode/05_fmcw/fmcw-thz-radar-sim/build/tests/radar_tests-b12d07c_tests.cmake")
+  include("/home/lvs/data/1_devel/10_claudeCode/05_fmcw/fmcw-thz-radar-sim/build/tests/radar_tests-b12d07c_tests.cmake")
+else()
+  add_test(radar_tests_NOT_BUILT-b12d07c radar_tests_NOT_BUILT-b12d07c)
+endif()

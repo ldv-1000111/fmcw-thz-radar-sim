@@ -72,9 +72,28 @@ Root ``CMakeLists.txt``
                Catch2::Catch2WithMain
    )
 
+   target_compile_options(radar_tests PRIVATE
+       $<$<CXX_COMPILER_ID:GNU,Clang>:-Wall -Wextra -Wpedantic>
+       $<$<CXX_COMPILER_ID:MSVC>:/W4>
+   )
+
    include(CTest)
    include(Catch)
-   catch_discover_tests(radar_tests)
+
+   # DISCOVERY_MODE PRE_TEST: discover tests at ctest run time, not at cmake
+   # configure time. This prevents the "No tests were found" warning that
+   # appears when cmake runs before the binary has been built.
+   catch_discover_tests(radar_tests
+       DISCOVERY_MODE PRE_TEST
+   )
+
+.. note::
+
+   ``DISCOVERY_MODE PRE_TEST`` is the key setting here. Without it,
+   ``catch_discover_tests`` attempts to run the test binary during
+   ``cmake`` configure — before it has been compiled — and prints
+   ``No tests were found!!!``. Setting ``PRE_TEST`` defers discovery to
+   the moment ``ctest`` actually runs, when the binary already exists.
 
 Build Commands
 ---------------
