@@ -3,6 +3,22 @@
 Introduction & Motivation
 =========================
 
+.. list-table::
+   :widths: 20 80
+   :stub-columns: 1
+
+   * - **Author**
+     - Luis Viveros
+   * - **Date**
+     - May 2026
+   * - **License**
+     - MIT — see the :ref:`license` page for the full text.
+       All source code and documentation in this tutorial may be freely
+       used, modified, and redistributed under the terms of the
+       `MIT License <https://opensource.org/licenses/MIT>`_.
+
+----
+
 Advanced Driver Assistance Systems (ADAS) and fully autonomous vehicles require
 sensing technologies that perform reliably in every operational design domain —
 in fog, rain, snow, direct sunlight glare, and dust. Cameras excel in clear

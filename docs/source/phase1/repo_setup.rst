@@ -28,10 +28,28 @@ Step 1 — Clone and Scaffold
    touch tests/test_range_doppler.cpp tests/test_cfar.cpp
    touch scripts/plot_if.py scripts/plot_range_doppler.py
 
-Step 2 — Add a Stub CMakeLists and Confirm a Clean Build
-----------------------------------------------------------
+.. important::
 
-Create the files described in :ref:`phase1_cmake_build`, then verify:
+   Before running any ``cmake`` command, you must first populate the source
+   files. The ``touch`` commands above created empty placeholders — the linker
+   will fail with ``undefined reference to 'main'`` if you try to build before
+   the content is in place.
+
+   **Complete** :ref:`phase1_cpp_implementation` now, which provides the full
+   source for every file listed above:
+
+   * ``include/fmcw_generator.hpp`` — ``RadarParams``, ``Target``, declaration
+   * ``include/csv_export.hpp`` — ``write_if_csv()``
+   * ``src/fmcw_generator.cpp`` — IF signal implementation
+   * ``src/main.cpp`` — CLI entry point
+
+   Then return here and proceed with Step 2.
+
+Step 2 — Add CMakeLists and Confirm a Clean Build
+--------------------------------------------------
+
+With all source files populated, create the files described in
+:ref:`phase1_cmake_build`, then verify:
 
 .. code-block:: bash
 
@@ -56,11 +74,11 @@ is green before any physics code is added:
 Step 4 — Implement, Test, Commit
 ----------------------------------
 
-Follow the remaining Phase 1 pages in order, keeping the test suite green
+Follow the Phase 1 pages in this order, keeping the test suite green
 at every push:
 
 #. :ref:`phase1_fmcw_theory` — understand the signal model
-#. :ref:`phase1_cpp_implementation` — write ``fmcw_generator.*`` and ``main.cpp``
+#. :ref:`phase1_cpp_implementation` — **write all source files first** (required before Step 2 above)
 #. :ref:`phase1_cmake_build` — finalise ``CMakeLists.txt``
 #. :ref:`phase1_testing` — write and run Catch2 tests
 #. :ref:`phase1_python_validation` — verify the range peak in Python
