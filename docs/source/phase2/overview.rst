@@ -16,12 +16,3 @@ Phase 2 Overview
      - ``v0.2.0``
    * - **New dependency**
      - FFTW3 (``libfftw3f``)
-
-.. toctree::
-   :maxdepth: 2
-
-   data_cube
-   range_doppler
-   cfar
-   embedded_opt
-   github_workflow

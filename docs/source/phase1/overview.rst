@@ -44,18 +44,3 @@ By the end of Phase 1 the repository must contain:
 
    Do **not** advance to Phase 2 until every item in this list is present
    and the CI pipeline reports green on ``main``.
-
-Phase 1 Pages
---------------
-
-.. toctree::
-   :maxdepth: 2
-
-   repo_setup
-   project_structure
-   fmcw_theory
-   cpp_implementation
-   cmake_build
-   testing
-   python_validation
-   github_workflow

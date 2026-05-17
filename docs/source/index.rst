@@ -58,18 +58,36 @@ pipeline.
    :caption: Phase 1 — Physics Engine
 
    phase1/overview
+   phase1/repo_setup
+   phase1/project_structure
+   phase1/fmcw_theory
+   phase1/cpp_implementation
+   phase1/cmake_build
+   phase1/testing
+   phase1/python_validation
+   phase1/github_workflow
 
 .. toctree::
    :maxdepth: 2
    :caption: Phase 2 — Signal Processing
 
    phase2/overview
+   phase2/data_cube
+   phase2/range_doppler
+   phase2/cfar
+   phase2/embedded_opt
+   phase2/github_workflow
 
 .. toctree::
    :maxdepth: 2
    :caption: Phase 3 — Yocto Deployment
 
    phase3/overview
+   phase3/meta_layer
+   phase3/bitbake_recipe
+   phase3/build_workflow
+   phase3/profiling
+   phase3/github_workflow
 
 .. toctree::
    :maxdepth: 2
