@@ -21,7 +21,7 @@ FMCW & TeraHertz Radar Simulation
 
 |
 
-**Author:** Luis Viveros · **Date:** May 2026 · **Repository:** `fmcw-thz-radar-sim <https://github.com/your-org/fmcw-thz-radar-sim>`_
+**Author:** Luis Viveros · **Date:** May 2026 · **Repository:** `fmcw-thz-radar-sim <https://github.com/ldv-1000111/fmcw-thz-radar-sim>`_
 
 ----
 
