@@ -38,10 +38,10 @@ or surpasses LiDAR.
      - Range + Vel + Material ID
      - Medium (chip-scale)
 
-Teradar Validated Performance
--------------------------------
+Validated THz Performance Metrics
+-----------------------------------
 
-From the Teradar ADAS Whitepaper (2025) and peer-reviewed sources:
+From peer-reviewed sources and published technical specifications:
 
 * **Angular resolution:** 0.5° at 160 m+ (peer-reviewed validation)
 * **Native angular resolution:** 0.1° (Modular Terahertz Engine specification)

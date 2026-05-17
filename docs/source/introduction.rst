@@ -35,9 +35,9 @@ architecture designed for automotive-grade mass production.
 
 .. note::
 
-   This tutorial is based on peer-reviewed literature and Teradar's validated
-   hardware specifications. All claims are traceable to the
-   :ref:`bibliography <bibliography>`.
+   This tutorial is based on peer-reviewed literature and empirically
+   validated hardware specifications from published research.
+   All claims are traceable to the :ref:`bibliography <bibliography>`.
 
 Why Simulate Before You Fabricate?
 ------------------------------------

@@ -60,21 +60,26 @@ Bibliography
    FFTW3. *Proceedings of the IEEE*, 93(2), 216–231.
    https://doi.org/10.1109/JPROC.2003.823119
 
-.. rubric:: Teradar Technology Whitepapers
+.. rubric:: Terahertz Technology — Published Research
 
-.. [teradar_adas]
-   Teradar Technologies (2025). *Terahertz Vision Drives ADAS Safety to New
-   Heights*. Teradar ADAS Whitepaper.
+.. [mit_subthz]
+   MIT Microsystems Technology Lab (2019). Sub-terahertz imaging method.
+   *IEEE Journal of Solid State Circuits*.
+   *(Chip achieving 32 pixels on 1.2 mm², 4300x sensitivity over standard pixels)*
 
-.. [teradar_autonomy]
-   Teradar Technologies (2025). *Teradar Vision enables Scalability and
-   Commercialization of Level 4 and 5 Autonomy*. Teradar Advanced Autonomy
-   Whitepaper.
+.. [mustang_acti]
+   Mustang Technology / US Army Research Labs (2017). Terahertz Radar DVE
+   Imaging — ACTI (Active Covert Terahertz Imager), 300–330 GHz.
+   *(Demonstrated robust performance in dust storms, fog, and blinding
+   precipitation, outperforming millimeter wave and lidar)*
 
-.. [teradar_defense]
-   Teradar Technologies (2025). *Teradar Delivers All-Weather Protection*.
-   Teradar Defense Whitepaper.
+.. [autosens2025]
+   AutoSens Europe (2025). Terahertz Imaging — A New Category of Automotive
+   Sensing Advancing ADAS and Autonomous Driving.
 
-.. [teradar_health]
-   Teradar Technologies (2025). *Unlocking Safe Skin Cancer Detection Through
-   the Promise of Terahertz Imaging*. Teradar Healthcare Whitepaper.
+.. [spie2021]
+   SPIE Photonics Focus (2021). Autonomous Cars Drive Terahertz Research.
+
+.. [nrc2022]
+   National Research Council Canada (2022). Sensors for Active Safety and
+   Driving Automation Systems.
