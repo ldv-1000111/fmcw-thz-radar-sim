@@ -1,2 +1,0 @@
-/usr/bin/ar qc libfmcw_core.a CMakeFiles/fmcw_core.dir/src/fmcw_generator.cpp.o
-/usr/bin/ranlib libfmcw_core.a
