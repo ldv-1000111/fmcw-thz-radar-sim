@@ -1,1 +1,0 @@
-/usr/bin/c++ -O3 -DNDEBUG CMakeFiles/radar_sim.dir/src/main.cpp.o -o radar_sim  libfmcw_core.a 
