@@ -57,7 +57,9 @@ Root ``CMakeLists.txt``
    FetchContent_MakeAvailable(Catch2)
 
    enable_testing()
-   add_subdirectory(tests)
+
+   # Unique binary dir name avoids conflict with Catch2's own tests/ subdirectory
+   add_subdirectory(tests radar_tests_build)
 
    install(TARGETS radar_sim DESTINATION bin)
    install(DIRECTORY include/ DESTINATION include)

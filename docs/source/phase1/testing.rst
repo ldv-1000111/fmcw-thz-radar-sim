@@ -288,29 +288,37 @@ variance, which is robust against phase wrapping and the ``t=0`` problem.
        $<$<CXX_COMPILER_ID:MSVC>:/W4>
    )
 
-   include(CTest)
-   include(Catch)
-   catch_discover_tests(radar_tests)
+   # Run the entire test binary as a single ctest entry.
+   # Catch2 reports each TEST_CASE internally with full pass/fail detail.
+   # Running individual tests via add_test causes ctest to quote the test
+   # name, which Catch2 misinterprets as a literal filter pattern
+   # (e.g. searching for '"IF signal..."' including the quote characters).
+   add_test(
+       NAME radar_unit_tests
+       COMMAND radar_tests
+       WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+   )
 
 ----
 
 Verified Test Output
 ---------------------
 
-All 7 tests were run against the committed code and produced the following
-output (ctest v3.24, GCC 13, Ubuntu 24.04):
+All 7 test cases (607 assertions) were run against the committed code
+(Unix Makefiles, GCC 13, Ubuntu 24.04):
 
 .. code-block:: text
 
    $ ctest --test-dir build --output-on-failure -V
 
-   1/7 Test #1: IF signal -- range bin accuracy within 1 bin .....   Passed  0.01 sec
-   2/7 Test #2: IF signal -- buffer size equals num_samples ......   Passed  0.00 sec
-   3/7 Test #3: IF signal -- all samples have unit magnitude .....   Passed  0.00 sec
-   4/7 Test #4: IF signal -- chirp index shifts slow-time phase ..   Passed  0.00 sec
-   5/7 Test #5: Micro-Doppler -- vibration increases phase variance  Passed  0.00 sec
-   6/7 Test #6: Micro-Doppler -- zero amplitude equals static model  Passed  0.00 sec
-   7/7 Test #7: Micro-Doppler -- larger amplitude increases spread .  Passed  0.00 sec
+   test 1
+       Start 1: radar_unit_tests
 
-   100% tests passed, 0 tests failed out of 7
-   Total Test time (real) = 0.04 sec
+   1: Test command: .../build/radar_tests_build/radar_tests
+   1: Randomness seeded to: 853545918
+   1: ===================================================================
+   1: All tests passed (607 assertions in 7 test cases)
+   1:
+   1/1 Test #1: radar_unit_tests .......   Passed    0.01 sec
+
+   100% tests passed, 0 tests failed out of 1
