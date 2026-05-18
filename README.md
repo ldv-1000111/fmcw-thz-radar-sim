@@ -14,7 +14,7 @@ A physics-level FMCW and Terahertz radar simulation built in C++17, with a
 2D Range-Doppler processing pipeline (Phase 2) and Yocto cross-compilation
 for ADAS embedded targets (Phase 3).
 
-📖 **Full tutorial:** [fmcw-thz-radar-sim.readthedocs.io](https://fmcw-thz-radar-sim.readthedocs.io)
+📖 **Full tutorial:** [fmcw-teraherz-radar-simumaltion.readthedocs.io](https://fmcw-teraherz-radar-simulation.readthedocs.io)
 
 ---
 
