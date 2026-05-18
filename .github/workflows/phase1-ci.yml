@@ -36,6 +36,8 @@ jobs:
         run: ctest --output-on-failure -V
 
       - name: Generate IF signal CSV
+        # Binary writes if_signal.csv next to itself (build/if_signal.csv)
+        # because main.cpp uses filesystem::path(argv[0]).parent_path()
         working-directory: build
         run: ./radar_sim
 
@@ -68,7 +70,7 @@ jobs:
           cppcheck --enable=all \
                    --error-exitcode=1 \
                    --suppress=missingIncludeSystem \
-                   --suppress=unusedFunction \
+                   --suppress=unmatchedSuppression \
                    --std=c++17 \
                    -I include \
                    src/
