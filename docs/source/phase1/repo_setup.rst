@@ -53,7 +53,7 @@ With all source files populated, create the files described in
 
 .. code-block:: bash
 
-   cmake -B build -G Ninja -DCMAKE_BUILD_TYPE=Release
+   cmake -B build -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release
    cmake --build build --parallel
    # Expected: radar_sim binary produced, 0 errors
 

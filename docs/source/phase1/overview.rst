@@ -20,7 +20,7 @@ Phase 1 Overview
    * - **C++ standard**
      - C++17
    * - **Build system**
-     - CMake ≥ 3.24, Ninja
+     - CMake ≥ 3.24
    * - **Test framework**
      - Catch2 v3 (fetched via ``FetchContent``)
 

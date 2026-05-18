@@ -26,7 +26,7 @@ set(number_of_tries 0)
 while(error_code AND number_of_tries LESS 3)
   execute_process(
     COMMAND "/usr/bin/git"
-            clone --no-checkout --config "advice.detachedHead=false" "https://github.com/catchorg/Catch2.git" "catch2-src"
+            clone --no-checkout --depth 1 --no-single-branch --config "advice.detachedHead=false" "https://github.com/catchorg/Catch2.git" "catch2-src"
     WORKING_DIRECTORY "/home/lvs/data/1_devel/10_claudeCode/05_fmcw/fmcw-thz-radar-sim/build/_deps"
     RESULT_VARIABLE error_code
   )

@@ -41,7 +41,7 @@ pipeline.
 .. rubric:: Prerequisites
 
 * C++17 compiler (GCC ≥ 11 or Clang ≥ 14)
-* CMake ≥ 3.24 and Ninja
+* CMake ≥ 3.24
 * Python 3.10+ with ``numpy`` and ``matplotlib`` (for validation scripts)
 * Git ≥ 2.38
 * Basic familiarity with radar fundamentals (bandwidth, chirp, beat frequency)

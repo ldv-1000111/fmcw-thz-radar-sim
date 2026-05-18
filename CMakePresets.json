@@ -1,0 +1,73 @@
+{
+  "version": 3,
+  "cmakeMinimumRequired": { "major": 3, "minor": 24, "patch": 0 },
+
+  "configurePresets": [
+    {
+      "name": "base",
+      "hidden": true,
+      "generator": "Unix Makefiles",
+      "binaryDir": "${sourceDir}/build",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "CMAKE_CXX_STANDARD": "17",
+        "CMAKE_CXX_STANDARD_REQUIRED": "ON",
+        "CMAKE_CXX_EXTENSIONS": "OFF"
+      }
+    },
+    {
+      "name": "release",
+      "displayName": "Release (Unix Makefiles)",
+      "description": "Standard release build",
+      "inherits": "base"
+    },
+    {
+      "name": "debug",
+      "displayName": "Debug (Unix Makefiles)",
+      "description": "Debug build with assertions enabled",
+      "inherits": "base",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug"
+      }
+    },
+    {
+      "name": "ninja",
+      "displayName": "Release (Ninja)",
+      "description": "Optional: faster incremental builds if Ninja works on your system",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "CMAKE_CXX_STANDARD": "17",
+        "CMAKE_CXX_STANDARD_REQUIRED": "ON",
+        "CMAKE_CXX_EXTENSIONS": "OFF"
+      }
+    }
+  ],
+
+  "buildPresets": [
+    {
+      "name": "release",
+      "configurePreset": "release",
+      "jobs": 0
+    },
+    {
+      "name": "debug",
+      "configurePreset": "debug",
+      "jobs": 0
+    },
+    {
+      "name": "ninja",
+      "configurePreset": "ninja",
+      "jobs": 0
+    }
+  ],
+
+  "testPresets": [
+    {
+      "name": "default",
+      "configurePreset": "release",
+      "output": { "verbosity": "verbose", "outputOnFailure": true }
+    }
+  ]
+}

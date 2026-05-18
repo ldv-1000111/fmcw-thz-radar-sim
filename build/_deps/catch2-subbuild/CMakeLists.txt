@@ -27,7 +27,7 @@ set_property(GLOBAL PROPERTY _CMAKE_FindGit_GIT_EXECUTABLE_VERSION
 
 include(ExternalProject)
 ExternalProject_Add(catch2-populate
-                     "UPDATE_DISCONNECTED" "False" "GIT_REPOSITORY" "https://github.com/catchorg/Catch2.git" "EXTERNALPROJECT_INTERNAL_ARGUMENT_SEPARATOR" "GIT_TAG" "v3.6.0"
+                     "UPDATE_DISCONNECTED" "False" "GIT_REPOSITORY" "https://github.com/catchorg/Catch2.git" "EXTERNALPROJECT_INTERNAL_ARGUMENT_SEPARATOR" "GIT_TAG" "v3.6.0" "GIT_SHALLOW" "TRUE"
                     SOURCE_DIR          "/home/lvs/data/1_devel/10_claudeCode/05_fmcw/fmcw-thz-radar-sim/build/_deps/catch2-src"
                     BINARY_DIR          "/home/lvs/data/1_devel/10_claudeCode/05_fmcw/fmcw-thz-radar-sim/build/_deps/catch2-build"
                     CONFIGURE_COMMAND   ""

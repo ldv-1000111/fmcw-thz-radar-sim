@@ -25,8 +25,8 @@ for ADAS embedded targets (Phase 3).
 git clone git@github.com:your-org/fmcw-thz-radar-sim.git
 cd fmcw-thz-radar-sim
 
-# 2. Build (requires CMake >= 3.24 and Ninja)
-cmake -B build -G Ninja -DCMAKE_BUILD_TYPE=Release
+# 2. Build (requires CMake >= 3.24)
+cmake -B build -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release
 cmake --build build --parallel
 
 # 3. Run tests
@@ -182,7 +182,7 @@ s_IF[i]   = exp(j * 2*pi * beat_freq * t)    where  t = i / fs
 | Dependency | Version | How it's obtained |
 |-----------|---------|-------------------|
 | CMake | >= 3.24 | System package / cmake.org |
-| Ninja | any | `apt install ninja-build` |
+| Ninja *(optional)* | any | `apt install ninja-build` — faster incremental builds |
 | Catch2 | v3.6.0 | `FetchContent` (automatic) |
 | numpy + matplotlib | any | `pip install numpy matplotlib` |
 | FFTW3 *(Phase 2)* | any | `apt install libfftw3-dev` |

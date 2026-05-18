@@ -105,7 +105,7 @@ Follow this sequence for the first clean push:
    git commit -m "feat(phase1): FMCW IF physics engine, Catch2 tests, CI"
 
    # ── Local verification before pushing ────────────────────────
-   cmake -B build -G Ninja -DCMAKE_BUILD_TYPE=Release
+   cmake -B build -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release
    cmake --build build --parallel
    ctest --test-dir build --output-on-failure -V
 
