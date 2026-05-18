@@ -290,12 +290,7 @@ variance, which is robust against phase wrapping and the ``t=0`` problem.
 
    include(CTest)
    include(Catch)
-
-   # PRE_TEST defers binary interrogation to ctest run time, eliminating
-   # the "No tests were found" warning at cmake configure time.
-   catch_discover_tests(radar_tests
-       DISCOVERY_MODE PRE_TEST
-   )
+   catch_discover_tests(radar_tests)
 
 ----
 
