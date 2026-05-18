@@ -1,1 +1,33 @@
+# Build directory
 build/
+cmake-build-*/
+
+# CMake cache and generated files
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+install_manifest.txt
+CTestTestfile.cmake
+
+# Compiled output
+*.o
+*.a
+*.so
+*.out
+
+# Generated data files
+if_signal.csv
+range_spectrum.png
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Editor / OS
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
