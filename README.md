@@ -1,5 +1,13 @@
 # FMCW & Terahertz Radar Simulation — Theory, Equations, and Bibliography
 
+[![Phase 1 CI](https://github.com/ldv-1000111/fmcw-thz-radar-sim/actions/workflows/phase1-ci.yml/badge.svg?branch=main)](https://github.com/ldv-1000111/fmcw-thz-radar-sim/actions/workflows/phase1-ci.yml)
+[![Phase 2 CI](https://github.com/ldv-1000111/fmcw-thz-radar-sim/actions/workflows/phase2-ci.yml/badge.svg?branch=main)](https://github.com/ldv-1000111/fmcw-thz-radar-sim/actions/workflows/phase2-ci.yml)
+[![Phase 3 CI](https://github.com/ldv-1000111/fmcw-thz-radar-sim/actions/workflows/phase3-ci.yml/badge.svg?branch=main)](https://github.com/ldv-1000111/fmcw-thz-radar-sim/actions/workflows/phase3-ci.yml)
+![C++17](https://img.shields.io/badge/C%2B%2B-17-blue)
+![CMake](https://img.shields.io/badge/CMake-3.24%2B-blue)
+![License](https://img.shields.io/badge/license-MIT-lightgrey)
+![Docs](https://readthedocs.org/projects/fmcw-terahertz-radar-simulation/badge/?version=latest)
+
 **Author:** Luis Viveros  
 **Repository:** [fmcw-thz-radar-sim](https://github.com/ldv-1000111/fmcw-thz-radar-sim)  
 **Docs:** [fmcw-terahertz-radar-simulation.readthedocs.io](https://fmcw-terahertz-radar-simulation.readthedocs.io)  
