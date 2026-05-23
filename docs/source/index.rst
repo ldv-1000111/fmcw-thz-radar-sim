@@ -77,6 +77,7 @@ pipeline.
    phase2/cfar
    phase2/embedded_opt
    phase2/github_workflow
+   phase2/lessons_learned
 
 .. toctree::
    :maxdepth: 2
