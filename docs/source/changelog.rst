@@ -23,10 +23,11 @@ prints ``PASS``. CI pipeline green on ``main``.
   precision and ``std::runtime_error`` on file-open failure
 * ``src/fmcw_generator.cpp`` — IF signal implementation with ``assert()``
   buffer-size guard, per-line physics comments, THz micro-Doppler vibration
-  term, and explicit ``total_t`` variable for clarity
-* ``src/main.cpp`` — CLI entry point with structured parameter printout
-  (frequency, bandwidth, chirp time, sample rate, target parameters);
-  expected range bin noted in comments (bin 1334 for the default 50 m target)
+  term. Updated in Phase 2 to add initial phase term ``phi0``; see
+  :ref:`phase2_lessons_learned` for the full rationale.
+* ``src/main.cpp`` — CLI entry point; updated in Phase 2 to generate a
+  three-target data cube and write both ``if_signal.csv`` and
+  ``range_doppler.csv``
 
 **Added — Tests**
 
@@ -94,15 +95,56 @@ prints ``PASS``. CI pipeline green on ``main``.
 
 ----
 
-v0.2.0 — *Planned*
---------------------
+v0.2.0 — May 2026
+-------------------
 
-* ``include/signal_processing.hpp`` / ``src/signal_processing.cpp`` —
-  FFTW3 2D Range-Doppler pipeline
-* ``include/cfar.hpp`` / ``src/cfar.cpp`` — CA-CFAR detector
-* ``tests/test_range_doppler.cpp`` / ``tests/test_cfar.cpp``
-* ``scripts/plot_range_doppler.py``
-* ``.github/workflows/phase2-ci.yml`` with FFTW3 installation step
+Phase 2 complete. All 16 Catch2 test cases passing (66232 assertions).
+Python Range-Doppler validation prints ``PASS`` for all three targets.
+CI pipeline green on ``main``.
+
+**Added — Source Files**
+
+* ``include/signal_processing.hpp`` — ``compute_range_doppler()`` declaration
+* ``include/cfar.hpp`` — ``cfar_detect()`` declaration
+* ``src/signal_processing.cpp`` — FFTW3 2D Range-Doppler pipeline with
+  Hann windowing on the range FFT for sidelobe suppression
+* ``src/cfar.cpp`` — CA-CFAR detector with guard/train cell logic
+
+**Updated — Source Files**
+
+* ``src/fmcw_generator.cpp`` — added initial phase term
+  ``phi0 = 2*pi*f0*tau0`` required for coherent inter-chirp Doppler
+  processing; vibration evaluated at slow-time only for micro-Doppler
+  sideband generation. See :ref:`phase2_lessons_learned` for the full
+  derivation.
+* ``src/main.cpp`` — extended to generate a three-target data cube
+  (20 m / 50 m / 80 m) and write both ``build/if_signal.csv`` and
+  ``build/range_doppler.csv``
+* ``CMakeLists.txt`` — FFTW3 via ``pkg_check_modules``;
+  ``signal_processing.cpp`` and ``cfar.cpp`` added to ``fmcw_core``
+
+**Added — Tests**
+
+* ``tests/test_range_doppler.cpp`` — 4 Catch2 tests: output dimensions,
+  range bin accuracy (30 m target within ±2 bins), all values non-negative,
+  moving target off-DC Doppler energy exceeds stationary target
+* ``tests/test_cfar.cpp`` — 5 Catch2 tests: spike detection, flat noise
+  floor, guard cell exclusion, edge clamping, alpha threshold scaling
+* ``tests/CMakeLists.txt`` — updated to include Phase 2 test files
+
+**Added — Tooling**
+
+* ``scripts/plot_range_doppler.py`` — validates three-target Range-Doppler
+  map by SNR using local non-DC Doppler median; saves
+  ``range_doppler_map.png``
+* ``.github/workflows/phase2-ci.yml`` — CI with ``libfftw3-dev`` install;
+  build, test, Range-Doppler validation, artefact upload
+
+**Added — Documentation**
+
+* ``docs/source/phase2/lessons_learned.rst`` — three theory-meets-practice
+  episodes: missing Doppler carrier, range FFT sidelobes, and Doppler test
+  design. See :ref:`phase2_lessons_learned`.
 
 ----
 
