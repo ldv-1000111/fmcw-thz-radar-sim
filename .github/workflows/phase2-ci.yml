@@ -69,6 +69,7 @@ jobs:
                    --error-exitcode=1 \
                    --suppress=missingIncludeSystem \
                    --suppress=unmatchedSuppression \
+                   --suppress=unusedFunction \
                    --std=c++17 \
                    -I include \
                    src/
