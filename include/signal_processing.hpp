@@ -3,7 +3,7 @@
 #include <vector>
 
 // Compute 2D Range-Doppler magnitude map from data cube.
-// cube[chirp][sample] → rd_map[doppler_bin][range_bin]
+// cube[chirp][sample] -> rd_map[doppler_bin][range_bin]
 void compute_range_doppler(
     const std::vector<std::vector<std::complex<float>>>& cube,
     int num_chirps,

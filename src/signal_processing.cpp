@@ -4,12 +4,26 @@
 #include <complex>
 #include <fftw3.h>
 
+// Pre-compute a Hann window of length N
+static std::vector<float> hann_window(int N)
+{
+    std::vector<float> w(N);
+    for (int i = 0; i < N; ++i)
+        w[i] = 0.5f * (1.0f - std::cos(2.0f * static_cast<float>(M_PI) * i / (N - 1)));
+    return w;
+}
+
 void compute_range_doppler(
     const std::vector<std::vector<std::complex<float>>>& cube,
     int num_chirps,
     int num_samples,
     std::vector<std::vector<float>>& rd_map)
 {
+    // Pre-compute Hann window for range FFT sidelobe suppression.
+    // Without windowing the strong 20m stationary target leaks into
+    // adjacent range bins at Doppler bin 0, masking weaker targets.
+    const auto win = hann_window(num_samples);
+
     // ── Step 1: Range FFT along fast-time axis ────────────────────────────
     std::vector<fftwf_complex> rbuf(num_samples);
 
@@ -24,8 +38,8 @@ void compute_range_doppler(
 
     for (int c = 0; c < num_chirps; ++c) {
         for (int s = 0; s < num_samples; ++s) {
-            rbuf[s][0] = cube[c][s].real();
-            rbuf[s][1] = cube[c][s].imag();
+            rbuf[s][0] = cube[c][s].real() * win[s];
+            rbuf[s][1] = cube[c][s].imag() * win[s];
         }
         fftwf_execute(rplan);
         for (int s = 0; s < num_samples; ++s)

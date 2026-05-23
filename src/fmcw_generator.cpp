@@ -25,31 +25,39 @@ void generate_chirp_if(
         // Fast-time sample instant (seconds within the chirp)
         const double t = static_cast<double>(i) / p.fs;
 
-        // ── Target range at (slow_t + t) — includes micro-Doppler ────────
+        // ── Range at start of this chirp (slow-time only) ────────────────
         //
-        //   R(t) = R0 + v*(slow_t + t) + A_vib * sin(2*pi*f_vib*(slow_t+t))
+        // In the FMCW deramping model the IF signal carries two phase terms:
         //
-        // The vibration term models THz micro-Doppler:
-        //   - Engine idle:      A_vib ≈ 0.2 mm, f_vib ≈ 200 Hz
-        //   - Drone propeller:  A_vib ≈ 0.5 mm, f_vib ≈ 80–120 Hz
-        //   - Set vib_amp = 0 to get a clean stationary/moving target
-        const double total_t = slow_t + t;
-        const double R = tgt.range
-                       + tgt.velocity * total_t
-                       + tgt.vib_amp  * std::sin(2.0 * M_PI * tgt.vib_freq * total_t);
+        //   phi_IF(t) = 2*pi*f0*tau0  +  2*pi*(B/Tc)*tau0*t
+        //               ^^^^^^^^^^^^     ^^^^^^^^^^^^^^^^^^^^
+        //               initial phase    beat tone (range FFT bin)
+        //               (Doppler)
+        //
+        // The initial phase phi0 = 2*pi*f0*tau0 advances by
+        //   2*pi * 2*f0*v/c * Tc
+        // between consecutive chirps — this is the Doppler phase that the
+        // slow-time (Doppler) FFT must see.  Without phi0, the range FFT
+        // output has no inter-chirp phase change and the Doppler FFT
+        // produces no peak for moving targets.
+        // ── Instantaneous range at chirp start + vibration phase ─────────
+        // Vibration modulates the initial phase (micro-Doppler sidebands):
+        //   R0(slow_t) = R_base + v*slow_t + A_vib*sin(2*pi*f_vib*slow_t)
+        const double R0   = tgt.range
+                          + tgt.velocity * slow_t
+                          + tgt.vib_amp  * std::sin(2.0 * M_PI * tgt.vib_freq * slow_t);
+        const double tau0 = 2.0 * R0 / C;
+        const double phi0 = 2.0 * M_PI * p.f0 * tau0;   // Doppler carrier
 
-        // ── Round-trip delay (seconds) ────────────────────────────────────
-        const double tau = 2.0 * R / C;
-
-        // ── IF beat frequency (Hz) ─────────────────────────────────────────
-        //
-        //   f_beat = (B/Tc) * tau   +   2*f0*v / c
-        //            ^^^range^^^         ^^^Doppler^^^
-        const double beat_freq = slope * tau
+        // ── IF beat frequency ─────────────────────────────────────────────
+        //   f_beat = (B/Tc)*tau0  +  2*f0*v/c   (use tau0 for range bin)
+        const double beat_freq = slope * tau0
                                + 2.0 * p.f0 * tgt.velocity / C;
 
-        // ── Complex IF sample: exp(j * 2*pi * f_beat * t) ────────────────
-        const double phase = 2.0 * M_PI * beat_freq * t;
+        // ── Full IF phase: initial phase + beat tone ─────────────────────
+        //   phi(t) = phi0 + 2*pi*f_beat*t
+        // (tau vs tau0: vibration modulates phi0 for micro-Doppler sidebands)
+        const double phase = phi0 + 2.0 * M_PI * beat_freq * t;
 
         out[i] = std::complex<float>(
             static_cast<float>(std::cos(phase)),

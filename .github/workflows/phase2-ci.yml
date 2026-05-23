@@ -1,0 +1,74 @@
+name: Phase 2 CI
+
+on:
+  push:
+    branches: [ "main", "phase-2/**" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  # ── Build, test, validate ────────────────────────────────────────────────
+  build-and-test:
+    name: Build · Test · Validate (Ubuntu latest)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install CMake, Ninja, FFTW3, Python packages
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y cmake ninja-build libfftw3-dev \
+                                  pkg-config python3-pip
+          pip3 install numpy matplotlib
+
+      - name: Configure CMake (Release)
+        run: |
+          cmake -B build -G Ninja \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DCMAKE_CXX_STANDARD=17
+
+      - name: Build
+        run: cmake --build build --parallel
+
+      - name: Run Catch2 test suite
+        working-directory: build
+        run: ctest --output-on-failure -V
+
+      - name: Generate Range-Doppler CSV
+        working-directory: build
+        run: ./radar_sim
+
+      - name: Python Range-Doppler validation
+        run: python3 scripts/plot_range_doppler.py build/range_doppler.csv
+
+      - name: Upload validation artefacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase2-validation-${{ github.sha }}
+          path: |
+            build/range_doppler.csv
+            range_doppler_map.png
+          retention-days: 14
+
+  # ── Static analysis ───────────────────────────────────────────────────────
+  static-analysis:
+    name: cppcheck static analysis
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install cppcheck
+        run: sudo apt-get install -y cppcheck
+
+      - name: Run cppcheck
+        run: |
+          cppcheck --enable=all \
+                   --error-exitcode=1 \
+                   --suppress=missingIncludeSystem \
+                   --suppress=unmatchedSuppression \
+                   --std=c++17 \
+                   -I include \
+                   src/
