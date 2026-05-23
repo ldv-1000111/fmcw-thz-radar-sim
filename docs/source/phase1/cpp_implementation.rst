@@ -3,15 +3,23 @@
 C++ Implementation
 ===================
 
-This page contains the **exact source code** committed to the repository.
+This page contains the **Phase 1 source code** as committed at tag ``v0.1.0``.
 All files listed here were verified to build and pass the full test suite
-(7/7 Catch2 assertions, Python ``PASS``) before tagging ``v0.1.0``.
+(7/7 Catch2 test cases, Python ``PASS``) before tagging.
 
 .. note::
 
    Two bugs were caught and fixed during the initial build verification
    and are documented in the :ref:`changelog`. The code on this page
    reflects the corrected, working versions.
+
+.. note::
+
+   ``src/fmcw_generator.cpp`` and ``src/main.cpp`` were updated in Phase 2.
+   The Phase 1 listings below are preserved for pedagogical clarity —
+   they are sufficient to understand range-bin validation. The Phase 2
+   changes and the reasoning behind them are documented in
+   :ref:`phase2_lessons_learned`.
 
 ----
 
@@ -57,10 +65,14 @@ living documentation of the signal model.
    // radar observing a single target. The output buffer must be pre-allocated
    // by the caller to exactly p.num_samples elements.
    //
-   // Physics:
+   // Phase 1 signal model (range validation only):
    //   beat_freq = (B/Tc)*tau + (2*f0*v/c)
    //   tau(t)    = 2*(R + v*t + A*sin(2*pi*fv*t)) / c
    //   s_IF[i]   = exp(j*2*pi*beat_freq*t)   where t = i/fs
+   //
+   // Note: this model produces correct range bins but lacks the initial
+   // phase term phi0 = 2*pi*f0*tau0 required for Doppler processing.
+   // See phase2/lessons_learned for the complete derivation.
    //
    void generate_chirp_if(
        const RadarParams&                p,
@@ -125,8 +137,17 @@ An ``assert()`` guard on the buffer size catches mismatches between
 ``p.num_samples`` and the caller's allocation in Debug builds, failing fast
 rather than producing silent memory corruption.
 
+.. note::
+
+   The Phase 1 implementation below uses the simplified signal model
+   ``phase = 2*pi*f_beat*t`` which is sufficient for range-bin validation.
+   Phase 2 adds the initial phase term ``phi0 = 2*pi*f0*tau0`` required
+   for coherent Doppler processing. The reason this term matters —
+   and why its absence is not detectable from Phase 1 tests alone —
+   is explained in :ref:`phase2_lessons_learned`.
+
 .. code-block:: cpp
-   :caption: src/fmcw_generator.cpp
+   :caption: src/fmcw_generator.cpp (Phase 1 version)
    :linenos:
 
    #include "fmcw_generator.hpp"
@@ -144,14 +165,10 @@ rather than producing silent memory corruption.
        assert(static_cast<int>(out.size()) == p.num_samples &&
               "generate_chirp_if: out buffer size must equal p.num_samples");
 
-       // Slow-time offset for this chirp (seconds from start of frame)
        const double slow_t = static_cast<double>(chirp_idx) * p.chirp_time;
-
-       // Chirp slope (Hz/s)
-       const double slope = p.bandwidth / p.chirp_time;
+       const double slope  = p.bandwidth / p.chirp_time;
 
        for (int i = 0; i < p.num_samples; ++i) {
-           // Fast-time sample instant (seconds within the chirp)
            const double t = static_cast<double>(i) / p.fs;
 
            // Target range at (slow_t + t) -- includes micro-Doppler
@@ -162,14 +179,12 @@ rather than producing silent memory corruption.
                           + tgt.vib_amp  * std::sin(
                                 2.0 * M_PI * tgt.vib_freq * total_t);
 
-           // Round-trip delay (seconds)
-           const double tau = 2.0 * R / C;
-
-           // IF beat frequency (Hz):  f_beat = (B/Tc)*tau + 2*f0*v/c
+           const double tau      = 2.0 * R / C;
            const double beat_freq = slope * tau
                                   + 2.0 * p.f0 * tgt.velocity / C;
 
-           // Complex IF sample: exp(j * 2*pi * f_beat * t)
+           // Phase 1 model: no initial phase term.
+           // Correct for range validation; updated in Phase 2 for Doppler.
            const double phase = 2.0 * M_PI * beat_freq * t;
            out[i] = std::complex<float>(
                static_cast<float>(std::cos(phase)),
@@ -182,15 +197,18 @@ rather than producing silent memory corruption.
 ``src/main.cpp``
 -----------------
 
-Phase 2 entry point — generates both the Phase 1 IF signal CSV
-(``build/if_signal.csv``) and a Phase 2 Range-Doppler map
-(``build/range_doppler.csv``) from a three-target superposed data cube. Configures a 300 GHz THz radar, generates one chirp
-for a stationary target at 50 m with 200 Hz engine vibration, writes
-``if_signal.csv``, and prints a parameter summary to ``stdout`` so the
-output is self-documenting when run in CI logs.
+The Phase 1 ``main.cpp`` generates a single-chirp IF signal for a stationary
+50 m target and writes it to ``build/if_signal.csv`` next to the binary.
+
+.. note::
+
+   ``main.cpp`` was significantly updated in Phase 2 to generate a
+   three-target data cube and produce both ``if_signal.csv`` and
+   ``range_doppler.csv``. The Phase 1 version is shown here for reference.
+   See :ref:`phase2_range_doppler` for the updated entry point.
 
 .. code-block:: cpp
-   :caption: src/main.cpp
+   :caption: src/main.cpp (Phase 1 version)
    :linenos:
 
    #include "fmcw_generator.hpp"
@@ -202,50 +220,29 @@ output is self-documenting when run in CI logs.
 
    int main(int argc, char* argv[])
    {
-       (void)argc;  // unused -- only argv[0] needed for output path
+       (void)argc;
 
-       // 300 GHz THz radar:
-       //   f0=300GHz -> lambda=1mm
-       //   bandwidth=4GHz -> delta_r=c/(2B)=3.75cm
        const RadarParams p {
-           300e9,    // f0          (Hz)
-           4e9,      // bandwidth   (Hz)
-           100e-6,   // chirp_time  (s)
-           50e6,     // fs          (Hz)
-           5000,     // num_samples
-           256       // num_chirps  (used in Phase 2)
+           300e9, 4e9, 100e-6, 50e6, 256, 256
        };
 
-       // Target: 50 m, stationary, 200 Hz engine micro-Doppler
-       //   expected range bin = round((B/Tc)*(2R/c)*Ns/fs) = 1334
        const Target tgt {
-           50.0,     // range    (m)
-           0.0,      // velocity (m/s)
-           1.0,      // rcs      (m^2)
-           0.0002,   // vib_amp  (m) = 0.2 mm
-           200.0     // vib_freq (Hz)
+           50.0,    // range    (m)
+           0.0,     // velocity (m/s)
+           1.0,     // rcs      (m^2)
+           0.0002,  // vib_amp  (m) = 0.2 mm
+           200.0    // vib_freq (Hz)
        };
 
        std::vector<std::complex<float>> if_sig(p.num_samples);
        generate_chirp_if(p, tgt, 0, if_sig);
 
-       // Write CSV next to the binary, not the working directory.
-       // ./build/radar_sim  ->  build/if_signal.csv  (consistent with CI)
        const std::filesystem::path out_path =
            std::filesystem::path(argv[0]).parent_path() / "if_signal.csv";
-
        write_if_csv(out_path.string(), if_sig);
 
        std::printf("Phase 1: wrote %zu samples -> %s\n",
                    if_sig.size(), out_path.string().c_str());
-       std::printf("         f0=%.0f GHz  B=%.0f GHz  "
-                   "Tc=%.0f us  fs=%.0f MHz\n",
-                   p.f0/1e9, p.bandwidth/1e9,
-                   p.chirp_time*1e6, p.fs/1e6);
-       std::printf("         target: R=%.1f m  v=%.1f m/s  "
-                   "vib=%.3f mm @ %.0f Hz\n",
-                   tgt.range, tgt.velocity,
-                   tgt.vib_amp * 1000.0, tgt.vib_freq);
        return 0;
    }
 
@@ -256,6 +253,4 @@ Expected ``main()`` Output
 
 .. code-block:: text
 
-   Phase 1: wrote 5000 samples -> ./build/if_signal.csv
-            f0=300 GHz  B=4 GHz  Tc=100 us  fs=50 MHz
-            target: R=50.0 m  v=0.0 m/s  vib=0.200 mm @ 200 Hz
+   Phase 1: wrote 256 samples -> ./build/if_signal.csv

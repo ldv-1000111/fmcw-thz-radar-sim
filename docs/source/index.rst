@@ -13,8 +13,8 @@ FMCW & TeraHertz Radar Simulation
 .. image:: https://img.shields.io/badge/C%2B%2B-17-blue
    :alt: C++17
 
-.. image:: https://img.shields.io/badge/version-0.1.0-orange
-   :alt: Version 0.1.0
+.. image:: https://img.shields.io/badge/version-0.2.0-orange
+   :alt: Version 0.2.0
 
 .. image:: https://img.shields.io/badge/license-MIT-lightgrey
    :alt: MIT License
@@ -77,6 +77,7 @@ pipeline.
    phase2/cfar
    phase2/embedded_opt
    phase2/github_workflow
+   phase2/lessons_learned
 
 .. toctree::
    :maxdepth: 2
