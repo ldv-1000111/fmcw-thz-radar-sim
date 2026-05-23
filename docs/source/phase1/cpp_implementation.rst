@@ -182,7 +182,9 @@ rather than producing silent memory corruption.
 ``src/main.cpp``
 -----------------
 
-CLI entry point. Configures a 300 GHz THz radar, generates one chirp
+Phase 2 entry point — generates both the Phase 1 IF signal CSV
+(``build/if_signal.csv``) and a Phase 2 Range-Doppler map
+(``build/range_doppler.csv``) from a three-target superposed data cube. Configures a 300 GHz THz radar, generates one chirp
 for a stationary target at 50 m with 200 Hz engine vibration, writes
 ``if_signal.csv``, and prints a parameter summary to ``stdout`` so the
 output is self-documenting when run in CI logs.
@@ -194,11 +196,14 @@ output is self-documenting when run in CI logs.
    #include "fmcw_generator.hpp"
    #include "csv_export.hpp"
    #include <cstdio>
+   #include <filesystem>
    #include <vector>
    #include <complex>
 
-   int main()
+   int main(int argc, char* argv[])
    {
+       (void)argc;  // unused -- only argv[0] needed for output path
+
        // 300 GHz THz radar:
        //   f0=300GHz -> lambda=1mm
        //   bandwidth=4GHz -> delta_r=c/(2B)=3.75cm
@@ -224,11 +229,15 @@ output is self-documenting when run in CI logs.
        std::vector<std::complex<float>> if_sig(p.num_samples);
        generate_chirp_if(p, tgt, 0, if_sig);
 
-       const char* out_path = "if_signal.csv";
-       write_if_csv(out_path, if_sig);
+       // Write CSV next to the binary, not the working directory.
+       // ./build/radar_sim  ->  build/if_signal.csv  (consistent with CI)
+       const std::filesystem::path out_path =
+           std::filesystem::path(argv[0]).parent_path() / "if_signal.csv";
+
+       write_if_csv(out_path.string(), if_sig);
 
        std::printf("Phase 1: wrote %zu samples -> %s\n",
-                   if_sig.size(), out_path);
+                   if_sig.size(), out_path.string().c_str());
        std::printf("         f0=%.0f GHz  B=%.0f GHz  "
                    "Tc=%.0f us  fs=%.0f MHz\n",
                    p.f0/1e9, p.bandwidth/1e9,
@@ -247,6 +256,6 @@ Expected ``main()`` Output
 
 .. code-block:: text
 
-   Phase 1: wrote 5000 samples -> if_signal.csv
+   Phase 1: wrote 5000 samples -> ./build/if_signal.csv
             f0=300 GHz  B=4 GHz  Tc=100 us  fs=50 MHz
             target: R=50.0 m  v=0.0 m/s  vib=0.200 mm @ 200 Hz
