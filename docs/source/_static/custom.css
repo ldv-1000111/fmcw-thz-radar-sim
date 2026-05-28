@@ -4,170 +4,243 @@
    Author: Luis Viveros — May 2026
    ================================================================ */
 
+
+
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;600;700&family=Source+Code+Pro:wght@400;600&display=swap');
+
 /* ── Top-level sidebar background ─────────────────────────── */
-.wy-nav-side,
-.wy-side-scroll {
-    background: #1a1c1e;
+.wy-nav-side, .wy-side-scroll { 
+    background: #2c3e50; 
 }
 
-.wy-side-nav-search {
-    background: #161819;
-    border-bottom: 1px solid #2c3e50;
+.wy-side-nav-search { 
+    background: #1a252f; 
+    border-bottom: 2px solid #2980b9; 
 }
 
-.wy-side-nav-search a,
-.wy-side-nav-search .wy-side-nav-search-icon {
-    color: #ecf0f1;
+.wy-side-nav-search a { 
+    color: #ecf0f1; 
+    font-family: 'Source Sans 3',sans-serif; 
+    font-weight:700; 
 }
 
-.wy-side-nav-search input[type="text"] {
-    background: #1e2a35;
-    border: 1px solid #2c3e50;
-    color: #b5bac4;
-    border-radius: 4px;
+.wy-side-nav-search input[type="text"] { 
+    background:#263545; 
+    border:1px solid #3d5166; 
+    color:#b5bac4; 
+    border-radius:4px; 
 }
 
 /* ── Navigation link colours ───────────────────────────────── */
-.wy-menu-vertical li.current > a,
-.wy-menu-vertical li.current > a:hover {
-    background: #162030;
-    color: #6eb0e8;
-    border-left: 4px solid #2980b9;
+.wy-menu-vertical a { 
+    font-family:'Source Sans 3',sans-serif; 
+    font-size:14px; 
+    color:#c8d3de; 
 }
 
-.wy-menu-vertical a {
-    color: #b5bac4;
+.wy-menu-vertical a:hover { 
+    background:#3d5166; 
+    color:#fff; 
 }
 
-.wy-menu-vertical a:hover {
-    background: #2c3e50;
-    color: #d6e4f3;
+.wy-menu-vertical li.current > a { 
+    background:rgba(41,128,185,.15); 
+    color:#fff; 
+    border-left:3px solid #2980b9; 
+    font-weight:600; 
+}
+
+.wy-menu-vertical .caption-text { 
+    font-family:'Source Code Pro',monospace; 
+    font-size:10px; 
+    font-weight:700; 
+    text-transform:uppercase; 
+    letter-spacing:.1em; 
+    color:#8899aa; 
 }
 
 /* ── Content area ──────────────────────────────────────────── */
-.wy-nav-content-wrap {
-    background: #fdfdfd;
+
+.wy-nav-content-wrap { 
+    background:#f8f7f3; 
 }
 
-.wy-nav-content {
-    max-width: 900px;
-}
-
-/* ── Code blocks ───────────────────────────────────────────── */
-div.highlight pre,
-.highlight {
-    background: #1e272e;
-    border: 1px solid #2c3e50;
-    border-radius: 6px;
-}
-
-div.highlight pre {
-    color: #cdd9e5;
-    font-family: 'Source Code Pro', 'Menlo', monospace;
-    font-size: 13.5px;
-    line-height: 1.65;
-}
-
-/* Caption bar above code blocks */
-div.code-block-caption {
-    background: #2c3e50;
-    color: #85929e;
-    border-radius: 6px 6px 0 0;
-    padding: 5px 14px;
-    font-size: 12px;
-    font-family: 'Source Code Pro', monospace;
-    border: 1px solid #2c3e50;
-    border-bottom: none;
-}
-
-/* ── Admonition boxes ──────────────────────────────────────── */
-.admonition,
-div.admonition {
-    border-radius: 6px;
-    border-left-width: 4px;
-}
-
-.admonition.note,
-div.note {
-    background: #e8f4fd;
-    border-color: #2980b9;
-}
-
-.admonition.warning,
-div.warning {
-    background: #fef9e7;
-    border-color: #f39c12;
-}
-
-.admonition.tip,
-div.tip {
-    background: #eafaf1;
-    border-color: #27ae60;
-}
-
-.admonition.important,
-div.important {
-    background: #fdf2f8;
-    border-color: #8e44ad;
-}
-
-/* Admonition title */
-.admonition-title {
-    font-family: 'Lato', sans-serif;
-    font-weight: 700;
-    font-size: 13px;
-    text-transform: uppercase;
-    letter-spacing: 0.8px;
-}
-
-/* ── Tables ────────────────────────────────────────────────── */
-table.docutils thead tr th {
-    background: #2c3e50;
-    color: #ecf0f1;
-    font-family: 'Lato', sans-serif;
-    font-weight: 600;
-}
-
-table.docutils tbody tr:nth-child(even) td {
-    background: #f5f8fa;
-}
-
-table.docutils td,
-table.docutils th {
-    border: 1px solid #d0d8e0;
-    padding: 8px 14px;
+.wy-nav-content { 
+    max-width:900px; 
+    background:#fff; 
+    font-family:'Source Sans 3',sans-serif; 
+    font-size:15px; 
+    color:#333; 
+    line-height:1.75; 
 }
 
 /* ── Heading styles ────────────────────────────────────────── */
-h1, h2, h3, h4 {
-    font-family: 'Lato', sans-serif;
-    color: #2c3e50;
+
+h1 { 
+    font-family:'Source Sans 3',sans-serif; 
+    font-size:2rem; 
+    font-weight:700; 
+    color:#1a252f; 
+    border-bottom:2px solid #e1e4e8; 
+    padding-bottom:10px; 
+    margin-bottom:22px; 
 }
 
-h1 { border-bottom: 2px solid #e0e6ec; padding-bottom: 8px; }
-h2 { border-bottom: 1px solid #e0e6ec; padding-bottom: 4px; }
+h2 { 
+    font-family:'Source Sans 3',sans-serif; 
+    font-size:1.4rem; 
+    font-weight:700; 
+    color:#1a252f; 
+    border-bottom:1px solid #e1e4e8; 
+    padding-bottom:6px; 
+    margin-top:40px; 
+}
+
+h3 { 
+    font-family:'Source Sans 3',sans-serif; 
+    font-size:1.1rem; 
+    font-weight:600; 
+    color:#2c3e50; 
+    margin-top:28px; 
+}
+
+/* ── Code blocks ───────────────────────────────────────────── */
+
+div.highlight, .highlight { 
+    background:#1e2a35 !important; 
+    border:1px solid #2c3e50; 
+    border-radius:6px; 
+}
+
+div.highlight pre { 
+    background:#1e2a35 !important; 
+    color:#abb2bf; 
+    font-family:'Source Code Pro',monospace; 
+    font-size:13.5px; 
+    line-height:1.6; 
+    padding:16px 18px; 
+}
 
 /* ── Inline code ───────────────────────────────────────────── */
-code.literal,
-tt.literal {
-    background: #e8edf2;
-    color: #c0392b;
-    border: 1px solid #d8dfe6;
-    border-radius: 3px;
-    padding: 1px 4px;
-    font-size: 13.5px;
+
+code.literal { 
+    font-family:'Source Code Pro',monospace; 
+    font-size:.88em; 
+    background:#f6f8fa; 
+    border:1px solid #dfe2e5; 
+    border-radius:3px; 
+    padding:1px 5px; 
+    color:#c0392b; 
 }
 
-/* ── Version badge in sidebar ──────────────────────────────── */
-.wy-side-nav-search .version {
-    color: #6e96d2;
-    font-family: 'Source Code Pro', monospace;
-    font-size: 11px;
+/* ── Tables ────────────────────────────────────────────────── */
+
+table.docutils { 
+    border-collapse:collapse; 
+    width:100%; 
+    font-size:14px; 
+    margin:16px 0 24px; }
+
+table.docutils th { 
+    background:#2c3e50 !important; 
+    color:#fff !important; 
+    padding:9px 13px; 
+    font-size:12px; 
+    font-weight:600; 
+    letter-spacing:.04em; 
+    text-transform:uppercase; 
+    border:none !important; 
 }
 
-/* ── Footer ────────────────────────────────────────────────── */
-footer {
-    border-top: 2px solid #e0e6ec;
-    color: #95a5a6;
-    font-size: 13px;
+table.docutils td { 
+    padding:8px 13px; 
+    border-bottom:1px solid #e1e4e8 !important; 
+    border-top:none !important; 
+    color:#555; 
+    vertical-align:top; 
+}
+
+table.docutils tr:nth-child(even) td { 
+    background:#f8f9fa; 
+}
+
+table.docutils tr:hover td { 
+    background:#f0f4f8; 
+}
+
+/* ── Admonition boxes ──────────────────────────────────────── */
+
+.admonition { 
+    border-left:4px solid; 
+    border-radius:0 5px 5px 0; 
+    padding:12px 16px; 
+    margin:18px 0; 
+    font-size:14px; 
+}
+
+.admonition-title { 
+    font-family:'Source Code Pro',monospace; 
+    font-size:11px; 
+    font-weight:700; 
+    text-transform:uppercase; 
+    letter-spacing:.07em; 
+    margin-bottom:6px; 
+}
+
+.note { 
+    background:#e8f4fd; 
+    border-color:#2980b9; 
+}
+
+.note .admonition-title {
+    color:#1a6998; 
+}
+
+.tip  { 
+    background:#eef7ee; 
+    border-color:#27ae60; 
+} 
+.tip  .admonition-title { 
+    color:#1e8449; 
+}
+
+.warning { 
+    background:#fff8e6; 
+    border-color:#f39c12; 
+} 
+
+.warning .admonition-title {
+    color:#b7770d; 
+}
+
+.danger  { 
+    background:#fdf0ee; 
+    border-color:#c0392b; 
+} 
+
+.danger  .admonition-title {
+    color:#c0392b; 
+}
+
+.rst-versions { 
+    background:#1a252f; 
+    border-top:1px solid #2c3e50; 
+}
+
+.rst-versions .rst-current-version { 
+    background:#2980b9; 
+    color:#fff; 
+    font-family:'Source Code Pro',monospace; 
+    font-size:12px; 
+}
+
+.rst-footer-buttons .btn-neutral { 
+    background:#2c3e50; 
+    color:#ecf0f1; 
+    border:1px solid #3d5166; 
+}
+
+.rst-footer-buttons .btn-neutral:hover { 
+    background:#3d5166; 
+    color:#fff; 
 }
