@@ -1,80 +1,49 @@
-# =============================================================================
-# Sphinx configuration — FMCW & TeraHertz Radar Simulation
-# Author : Luis Viveros
-# Date   : May 2026
-# =============================================================================
-
-import os
-import sys
-
-# -- Project information ------------------------------------------------------
-
-project   = "FMCW & TeraHertz Radar Simulation"
-copyright = "2026, Luis Viveros"
-author    = "Luis Viveros"
-release   = "0.1.0"
-version   = "0.1"
-
-# -- General configuration ----------------------------------------------------
+# conf.py — Terahertz Technology Intelligence
+project   = "Terahertz Technology Intelligence"
+copyright = "2025, Teradar"
+author    = "Teradar"
+release   = "1.0"
+version   = "1.0"
 
 extensions = [
-    "sphinx.ext.autodoc",
-    "sphinx.ext.viewcode",
-    "sphinx.ext.napoleon",
-    "sphinx.ext.intersphinx",
-    "sphinx.ext.todo",
-    "sphinx.ext.githubpages",
-    "myst_parser",                  # Markdown support (.md files)
+    "sphinx_revealjs",
+    "sphinx_copybutton",
 ]
-
-templates_path   = ["_templates"]
-exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
-
-# MyST-Parser settings
-myst_enable_extensions = [
-    "colon_fence",
-    "deflist",
-    "tasklist",
-    "fieldlist",
-]
-
-# -- Options for HTML output --------------------------------------------------
 
 html_theme = "sphinx_rtd_theme"
-
 html_theme_options = {
-    "logo_only"            : False,
+    "logo_only":                  False,
+    "display_version":            True,
     "prev_next_buttons_location": "bottom",
-    "style_external_links" : True,
-    "collapse_navigation"  : False,
-    "sticky_navigation"    : True,
-    "navigation_depth"     : 4,
-    "includehidden"        : True,
-    "titles_only"          : False,
-    "style_nav_header_background": "#1a1c1e",
+    "style_external_links":       True,
+    "collapse_navigation":        False,
+    "sticky_navigation":          True,
+    "navigation_depth":           4,
 }
 
-html_static_path = ["_static"]
-html_css_files   = ["custom.css"]
+html_static_path     = ["_static"]
+html_css_files       = ["custom.css"]
+html_show_sphinx     = False
+html_show_sourcelink = False
 
-html_title         = "FMCW & THz Radar Simulation"
-html_short_title   = "THz Radar Sim"
-html_show_sourcelink = True
-html_show_sphinx     = True
-html_copy_source     = True
+master_doc       = "index"
+exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
+source_suffix    = {".rst": "restructuredtext"}
+pygments_style   = "monokai"
 
-# -- Todo extension -----------------------------------------------------------
+copybutton_prompt_text     = r"^\$ |>>> "
+copybutton_prompt_is_regexp = True
 
-todo_include_todos = True
-
-# -- Intersphinx mapping ------------------------------------------------------
-
-intersphinx_mapping = {
-    "python": ("https://docs.python.org/3", None),
-    "numpy" : ("https://numpy.org/doc/stable", None),
+# ── reveal.js (slides keep Teradar dark theme) ───────────────
+revealjs_theme = "black"
+revealjs_script_conf = {
+    "controls":             True,
+    "progress":             True,
+    "slideNumber":          True,
+    "transition":           "fade",
+    "backgroundTransition": "fade",
+    "hash":                 True,
+    "center":               True,
 }
-
-# -- Napoleon (Google/NumPy docstrings) ---------------------------------------
-
-napoleon_google_docstring = True
-napoleon_numpy_docstring  = True
+revealjs_css_files   = ["custom.css"]
+revealjs_static_path = ["_static"]
