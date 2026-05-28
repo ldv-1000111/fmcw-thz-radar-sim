@@ -1,14 +1,19 @@
-# conf.py — Terahertz Technology Intelligence
-project   = "Terahertz Technology Intelligence"
-copyright = "2025, Teradar"
-author    = "Teradar"
-release   = "1.0"
-version   = "1.0"
+# -- Project information ------------------------------------------------------
+
+project   = "FMCW & TeraHertz Radar Simulation"
+copyright = "2026, Luis Viveros"
+author    = "Luis Viveros"
+release   = "0.1.0"
+version   = "0.1"
+
+# -- General configuration ----------------------------------------------------
 
 extensions = [
     "sphinx_revealjs",
     "sphinx_copybutton",
 ]
+
+# -- Options for HTML output --------------------------------------------------
 
 html_theme = "sphinx_rtd_theme"
 html_theme_options = {
