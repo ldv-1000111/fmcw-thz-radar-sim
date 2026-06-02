@@ -139,13 +139,13 @@ Stacking ``NC`` chirps produces the cube visualised below:
 .. code-block:: text
 
                    range bins (fast-time FFT →)
-                  ┌──────────────────────────────┐
+                 ┌─────────────────────────────┐
    chirp 0 (c=0) │  ·  ·  ·  ●  ·  ·  ·  ·  ·  │
    chirp 1 (c=1) │  ·  ·  ·  ●  ·  ·  ·  ·  ·  │  ← same range bin,
    chirp 2 (c=2) │  ·  ·  ·  ●  ·  ·  ·  ·  ·  │     phase rotating
       ...        │  ·  ·  ·  ●  ·  ·  ·  ·  ·  │     each row
    chirp NC-1    │  ·  ·  ·  ●  ·  ·  ·  ·  ·  │
-                  └──────────────────────────────┘
+                 └─────────────────────────────┘
                              ↑
                    take this column and apply
                    slow-time FFT → velocity
